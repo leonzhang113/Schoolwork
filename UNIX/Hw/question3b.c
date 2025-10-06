@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+#define MAXLINE 4096
+
+void err_sys(const char *msg) {
+    perror(msg);
+    exit(EXIT_FAILURE);
+}
+
+void err_msg(const char *msg) {
+    fprintf(stderr, "%s\n", msg);
+}
+
+int main(void) {
+    int fd1[2], fd2[2];
+    pid_t pid;
+    char line[MAXLINE];
+    FILE *fpin, *fpout;
+
+    if (pipe(fd1) < 0 || pipe(fd2) < 0)
+        err_sys("pipe error");
+
+    if ((pid = fork()) < 0) {
+        err_sys("fork error");
+    } else if (pid > 0) { /* parent */
+        close(fd1[0]);
+        close(fd2[1]);
+
+        fpout = fdopen(fd1[1], "w");
+        fpin = fdopen(fd2[0], "r");
+
+        while (fgets(line, MAXLINE, stdin) != NULL) {
+            if (fputs(line, fpout) == EOF)
+                err_sys("fputs error to pipe");
+            fflush(fpout);
+
+            if (fgets(line, MAXLINE, fpin) == NULL)
+                err_msg("child closed pipe");
+            else {
+                if (fputs(line, stdout) == EOF)
+                    err_sys("fputs error to stdout");
+            }
+        }
+
+        if (ferror(stdin))
+            err_sys("fgets error on stdin");
+        fclose(fpout);
+        fclose(fpin);
+        waitpid(pid, NULL, 0);  
+        exit(0);
+    } else { /* child */
+        close(fd1[1]);
+        close(fd2[0]);
+
+        fpin = fdopen(fd1[0], "r");
+        fpout = fdopen(fd2[1], "w");
+
+        if (dup2(fd1[0], STDIN_FILENO) != STDIN_FILENO)
+            err_sys("dup2 error to stdin");
+        if (dup2(fd2[1], STDOUT_FILENO) != STDOUT_FILENO)
+            err_sys("dup2 error to stdout");
+        
+        fclose(fpin);
+        fclose(fpout);
+
+        if (execl("./add2", "add2", (char *)0) < 0)
+            err_sys("execl error");
+    }
+    exit(0);
+}
