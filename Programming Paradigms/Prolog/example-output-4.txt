@@ -1,0 +1,28 @@
+Welcome to SWI-Prolog (threaded, 64 bits, version 9.0.4)
+SWI-Prolog comes with ABSOLUTELY NO WARRANTY. This is free software.
+Please run ?- license. for legal details.
+
+For online help and background, visit https://www.swi-prolog.org
+For built-in help, use ?- help(Topic). or ?- apropos(Word).
+
+?- plan(Plan).
+Plan = plan([workstation(1, [ginny, daniel]), workstation(2, [sarah]), workstation(3, [mira]), workstation(4, [nick, charlie])], [workstation(1, [erica, kimberly]), workstation(2, [ryan]), workstation(3, [tim]), workstation(4, [alice, quinn])], [workstation(1, [ulysses, harry]), workstation(2, [yusuf]), workstation(3, [bob]), workstation(4, [iris, larry, zoey|...])]) ;
+Plan = plan([workstation(1, [ginny, daniel]), workstation(2, [sarah]), workstation(3, [mira]), workstation(4, [nick, charlie])], [workstation(1, [erica, kimberly]), workstation(2, [ryan]), workstation(3, [tim]), workstation(4, [alice, quinn])], [workstation(1, [ulysses, harry]), workstation(2, [yusuf]), workstation(3, [bob, larry]), workstation(4, [iris, zoey, jack|...])]) ;
+Plan = plan([workstation(1, [ginny, daniel]), workstation(2, [sarah]), workstation(3, [mira]), workstation(4, [nick, charlie])], [workstation(1, [erica, kimberly]), workstation(2, [ryan]), workstation(3, [tim]), workstation(4, [alice, quinn])], [workstation(1, [ulysses, harry]), workstation(2, [yusuf]), workstation(3, [bob, larry, zoey]), workstation(4, [iris, jack, frank])]) ;
+Plan = plan([workstation(1, [ginny, daniel]), workstation(2, [sarah]), workstation(3, [mira]), workstation(4, [nick, charlie])], [workstation(1, [erica, kimberly]), workstation(2, [ryan]), workstation(3, [tim]), workstation(4, [alice, quinn])], [workstation(1, [ulysses, harry]), workstation(2, [yusuf]), workstation(3, [bob, larry, zoey]), workstation(4, [iris, jack, frank])]) .
+
+?- plan(Plan),no_work(Plan,_).
+false.
+
+?- plan(Plan),double_work(Plan,_).
+false.
+
+?- plan(Plan),works_at(Plan,_,iris,1).
+false.
+
+?- plan(Plan),works_at(Plan,_,iris,2).
+false.
+
+?- plan(Plan),works_at(Plan,_,iris,3).
+false.
+

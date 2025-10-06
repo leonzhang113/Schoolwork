@@ -1,0 +1,4 @@
+compute -> *,&,%,compute2
+compute2 -> *,&,%,compute3
+compute3 -> *,&,%,&
+main -> &,&,&,%,&,&,compute

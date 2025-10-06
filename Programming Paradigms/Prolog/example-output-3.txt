@@ -1,0 +1,28 @@
+Welcome to SWI-Prolog (threaded, 64 bits, version 9.0.4)
+SWI-Prolog comes with ABSOLUTELY NO WARRANTY. This is free software.
+Please run ?- license. for legal details.
+
+For online help and background, visit https://www.swi-prolog.org
+For built-in help, use ?- help(Topic). or ?- apropos(Word).
+
+?- plan(Plan).
+Plan = plan([workstation(1, [zoey]), workstation(2, [ophelia, ulysses])], [workstation(1, [kimberly, sarah, jack]), workstation(2, [ginny, ximena, walter])], [workstation(1, [erica, quinn, iris, tim, larry]), workstation(2, [daniel, mira, frank])]) ;
+Plan = plan([workstation(1, [zoey]), workstation(2, [ophelia, ulysses])], [workstation(1, [kimberly, sarah, jack, ginny]), workstation(2, [ximena, walter])], [workstation(1, [erica, quinn, iris, tim, larry]), workstation(2, [daniel, mira, frank])]) ;
+Plan = plan([workstation(1, [zoey]), workstation(2, [ophelia, ulysses])], [workstation(1, [kimberly, sarah, jack, ginny]), workstation(2, [ximena, walter, quinn])], [workstation(1, [erica, iris, tim, larry]), workstation(2, [daniel, mira, frank])]) .
+
+?- plan(Plan),no_work(Plan,_).
+false.
+
+?- plan(Plan),double_work(Plan,_).
+false.
+
+?- plan(Plan),works_at(Plan,_,time,2).
+false.
+
+?- plan(Plan),works_at(Plan,morning,daniel,_).
+false.
+
+?- plan(Plan),works_at(Plan,evening,daniel,_).
+false.
+
+?- 

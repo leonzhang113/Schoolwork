@@ -1,0 +1,21 @@
+Welcome to SWI-Prolog (threaded, 64 bits, version 9.0.4)
+SWI-Prolog comes with ABSOLUTELY NO WARRANTY. This is free software.
+Please run ?- license. for legal details.
+
+For online help and background, visit https://www.swi-prolog.org
+For built-in help, use ?- help(Topic). or ?- apropos(Word).
+
+?- plan(Plan).
+Plan = plan([workstation(1, [peter])], [workstation(1, [ophelia, ximena, venessa, bob, jack, alice])], [workstation(1, [iris, nick, ryan, kimberly, charlie, harry])]) ;
+Plan = plan([workstation(1, [peter, ximena])], [workstation(1, [ophelia, venessa, bob, jack, alice])], [workstation(1, [iris, nick, ryan, kimberly, charlie, harry])]) ;
+Plan = plan([workstation(1, [peter, ximena])], [workstation(1, [ophelia, venessa, bob, jack, alice, iris])], [workstation(1, [nick, ryan, kimberly, charlie, harry])]) .
+
+?- plan(Plan),no_work(Plan,_).
+false.
+
+?- plan(Plan),double_work(Plan,_).
+false.
+
+?- plan(Plan),works_at(Plan,moring,ophelia,_).
+false.
+

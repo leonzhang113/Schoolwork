@@ -1,0 +1,10 @@
+sumByKey :: [(Int, Int)] -> Either String (Int, Int)
+sumByKey pairs
+  | any (\(k, _) -> k /= 0 && k /= 1) pairs = Left "Invalid key found."
+  | otherwise = Right (sum0s, sum1s)
+  where
+    valuesWithKey0 = map snd $ filter (\(k, _) -> k == 0) pairs
+    valuesWithKey1 = map snd $ filter (\(k, _) -> k == 1) pairs
+
+    sum0s = sum valuesWithKey0
+    sum1s = sum valuesWithKey1

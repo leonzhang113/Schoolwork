@@ -1,0 +1,3 @@
+main -> step,show
+step -> &,&
+show -> %,&,*
